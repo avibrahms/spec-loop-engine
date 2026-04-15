@@ -190,12 +190,24 @@ def _find_latest_unfinished_run(spec: SpecConfig) -> Path | None:
     if not spec.run_root.exists():
         return None
     phase_limits = {phase.id: phase.max_attempts for phase in spec.phases}
+    recoverable_phase_statuses = {"running", "verifying", "needs_retry", "needs_verification"}
     candidates = sorted([path for path in spec.run_root.iterdir() if path.is_dir()], reverse=True)
     for candidate in candidates:
         state_path = candidate / "state.json"
         if not state_path.exists():
             continue
         state = _load_state(state_path)
+        if state.get("status") == "failed" and any(
+            isinstance(phase_state, dict) and phase_state.get("status") in recoverable_phase_statuses
+            for phase_state in state.get("phases", {}).values()
+        ):
+            return candidate
+        if state.get("status") == "blocked" and any(
+            _needs_verifier_only_retry(phase_state)
+            for phase_state in state.get("phases", {}).values()
+            if isinstance(phase_state, dict)
+        ):
+            return candidate
         if state.get("status") == "failed" and any(
             _needs_verifier_only_retry(phase_state)
             for phase_state in state.get("phases", {}).values()
@@ -398,7 +410,7 @@ def _needs_verifier_only_retry(phase_state: dict[str, Any]) -> bool:
     latest = attempts[-1]
     runner = latest.get("runner", {})
     verifier = latest.get("verifier", {})
-    return runner.get("status") == "success" and verifier.get("status") == "failed"
+    return runner.get("status") == "success" and verifier.get("status") in {"failed", "blocked"}
 
 
 def _run_subprocess(
@@ -947,9 +959,13 @@ def run_spec(spec: SpecConfig, *, fresh: bool = False) -> Path:
         if phase_state["status"] == "completed":
             continue
         if phase_state["status"] == "blocked":
-            state["status"] = "blocked"
-            _save_state(state_path, state)
-            return run_dir
+            if _needs_verifier_only_retry(phase_state):
+                state["status"] = "running"
+                _save_state(state_path, state)
+            else:
+                state["status"] = "blocked"
+                _save_state(state_path, state)
+                return run_dir
 
         while True:
             if _needs_verifier_only_retry(phase_state):
@@ -1047,6 +1063,7 @@ def run_spec(spec: SpecConfig, *, fresh: bool = False) -> Path:
             attempt_dir.mkdir(parents=True, exist_ok=True)
             runtime = _build_context(spec, run_dir, phase, attempt, phase_dir, attempt_dir)
             phase_state["status"] = "running"
+            state["status"] = "running"
             _save_state(state_path, state)
 
             _journal(journal_path, "phase_attempt_started", phase_id=phase.id, attempt=attempt)

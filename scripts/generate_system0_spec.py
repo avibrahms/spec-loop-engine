@@ -191,7 +191,7 @@ def build_spec() -> dict:
                 "codex_bin": CODEX_BIN,
                 "model": "${model}",
                 "reasoning_effort": "${verify_effort}",
-                "sandbox": "workspace-write",
+                "sandbox": "danger-full-access",
                 "skip_git_repo_check": True,
                 "env": {
                     "PATH": VERIFIER_PATH,

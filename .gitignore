@@ -5,6 +5,8 @@ __pycache__/
 *.pyc
 *.egg-info/
 .spec-loop/
+.sz/
+.sz.yaml
 logs/
 demo/workspace/*
 !demo/workspace/.gitkeep

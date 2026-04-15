@@ -138,4 +138,4 @@ This repo also contains a generated spec for your System Zero phased build plan:
 ./bin/spec-loop run specs/system0-plan.yaml
 ```
 
-It runs each phase with one fresh Codex CLI process, then runs a second fresh Codex CLI verifier in read-only mode before allowing the next phase to start.
+It runs each phase with one fresh Codex CLI process, then runs a second fresh Codex CLI verifier before allowing the next phase to start. The System Zero verifier uses full-access mode because later phases must independently check public GitHub, PyPI, and Fly.io launch surfaces.

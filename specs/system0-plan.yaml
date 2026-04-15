@@ -23,7 +23,7 @@ defaults:
     codex_bin: /Applications/Codex.app/Contents/Resources/codex
     model: ${model}
     reasoning_effort: ${verify_effort}
-    sandbox: workspace-write
+    sandbox: danger-full-access
     skip_git_repo_check: true
     env:
       PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/avi/.local/bin:/Applications/Codex.app/Contents/Resources
