@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="/Users/avi/Documents/Projects/spec-loop-engine"
+WORKSPACE="/Users/avi/Documents/Projects/system0-natural"
+RUN_ROOT="$WORKSPACE/.spec-loop/runs/system0-plan"
+PHASE="${1:-phase-10-cloud-and-billing}"
+INTERVAL="${SYSTEM0_PAUSE_INTERVAL_SECONDS:-2}"
+LOG_DIR="$ROOT/logs"
+LOG="$LOG_DIR/system0-pause-after-phase.log"
+
+mkdir -p "$LOG_DIR"
+cd "$ROOT"
+
+log() {
+  printf '[%s] %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" | tee -a "$LOG"
+}
+
+stop_runner() {
+  local reason="$1"
+  local runner_pids codex_pids
+
+  runner_pids="$(pgrep -f 'spec-loop run specs/system0-plan.yaml' || true)"
+  codex_pids="$(pgrep -f "$WORKSPACE/.spec-loop/runs/system0-plan/.*/phases/phase-1[1-6].*/codex exec|codex exec.*$WORKSPACE/.spec-loop/runs/system0-plan/.*/phases/phase-1[1-6]" || true)"
+
+  log "pause condition reached: $reason"
+
+  if [[ -n "$codex_pids" ]]; then
+    log "stopping post-$PHASE Codex processes: ${codex_pids//$'\n'/,}"
+    kill -TERM $codex_pids 2>/dev/null || true
+  fi
+
+  if [[ -n "$runner_pids" ]]; then
+    log "stopping spec-loop runner pids: ${runner_pids//$'\n'/,}"
+    kill -TERM $runner_pids 2>/dev/null || true
+  else
+    log "no spec-loop runner is alive; already paused/stopped"
+  fi
+}
+
+log "watching for $PHASE to finish before pausing the run"
+
+while true; do
+  latest_run=""
+  if [[ -d "$RUN_ROOT" ]]; then
+    latest_run="$(find "$RUN_ROOT" -mindepth 1 -maxdepth 1 -type d -print | sort | tail -n 1)"
+  fi
+
+  if [[ -z "$latest_run" || ! -f "$latest_run/state.json" ]]; then
+    log "no run state found yet; sleeping"
+    sleep "$INTERVAL"
+    continue
+  fi
+
+  run_status="$(jq -r '.status // "unknown"' "$latest_run/state.json")"
+  phase_status="$(jq -r --arg phase "$PHASE" '.phases[$phase].status // "missing"' "$latest_run/state.json")"
+  next_active="$(jq -r --arg phase "$PHASE" '.phases | to_entries[] | select(.key != $phase and .value.status == "running") | .key' "$latest_run/state.json" | head -n 1)"
+
+  log "run_status=$run_status $PHASE=$phase_status next_active=${next_active:-none}"
+
+  case "$phase_status" in
+    completed)
+      stop_runner "$PHASE completed"
+      exit 0
+      ;;
+    failed|blocked)
+      stop_runner "$PHASE ended as $phase_status"
+      exit 0
+      ;;
+  esac
+
+  if [[ "$run_status" == "failed" || "$run_status" == "blocked" || "$run_status" == "completed" ]]; then
+    stop_runner "run ended with status=$run_status while $PHASE status=$phase_status"
+    exit 0
+  fi
+
+  if [[ -n "$next_active" ]]; then
+    stop_runner "$next_active started after $PHASE boundary"
+    exit 0
+  fi
+
+  sleep "$INTERVAL"
+done

@@ -27,6 +27,12 @@ mkdir -p "$LOG_DIR"
   ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   printf '\n[%s] system0 watchdog check\n' "$ts"
 
+  if [[ -f "$LOG_DIR/system0-pause-request" ]]; then
+    printf '[%s] pause request is active; watchdog will observe but not resume or repair\n' "$ts"
+    ./bin/system0-status | sed 's/^/[status] /' || true
+    exit 0
+  fi
+
   latest_run=""
   if [[ -d "$RUN_ROOT" ]]; then
     latest_run="$(find "$RUN_ROOT" -mindepth 1 -maxdepth 1 -type d -print | sort | tail -n 1)"
