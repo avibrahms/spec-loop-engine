@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="/Users/avi/Documents/Projects/spec-loop-engine"
+INTERVAL="${SYSTEM0_WATCHDOG_INTERVAL_SECONDS:-900}"
+LOG_DIR="$ROOT/logs"
+mkdir -p "$LOG_DIR"
+
+while true; do
+  printf '\n[%s] system0 watchdog tick starting\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  "$ROOT/bin/system0-watchdog-check" || true
+  printf '[%s] system0 watchdog tick finished; latest recovery lines:\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  grep -E 'system0 watchdog check|run=|runner is alive|status is .*no runner|exhausted the normal attempt budget|resume pid|max-attempt recovery pid|run completed|run is .*invoking Codex repair|repair pass|post-repair resume|unknown state|no run state' "$LOG_DIR/system0-watchdog.log" 2>/dev/null | tail -n 10 || true
+  printf '[%s] sleeping %s seconds before next watchdog check\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$INTERVAL"
+  sleep "$INTERVAL"
+done

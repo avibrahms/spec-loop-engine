@@ -1,0 +1,2 @@
+[console_scripts]
+spec-loop = spec_loop_engine.cli:main

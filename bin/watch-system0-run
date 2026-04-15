@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+INTERVAL="${1:-15}"
+STATUS_CMD="/Users/avi/Documents/Projects/spec-loop-engine/bin/system0-status"
+
+while true; do
+  clear
+  "$STATUS_CMD"
+  echo
+  echo "Refreshing in ${INTERVAL}s. Ctrl-C to stop."
+  sleep "$INTERVAL"
+done

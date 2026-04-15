@@ -1,0 +1,55 @@
+version: 1
+name: demo-codex
+workspace: ${spec_dir}/../demo/workspace
+vars:
+  model: gpt-5.4
+  execute_effort: medium
+  verify_effort: low
+defaults:
+  max_attempts: 3
+  runner:
+    type: codex_exec
+    codex_bin: codex
+    model: ${model}
+    reasoning_effort: ${execute_effort}
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+  verifier:
+    type: codex_exec
+    codex_bin: codex
+    model: ${model}
+    reasoning_effort: ${verify_effort}
+    sandbox: read-only
+    skip_git_repo_check: true
+phases:
+  - id: phase-01-create-file
+    title: Create the demo file
+    run:
+      prompt: |
+        Create a file named `hello.txt` in the workspace root.
+        Its exact contents must be:
+
+        hello from phase 1
+    verify:
+      prompt: |
+        Verify that `${workspace}/hello.txt` exists.
+        Verify that its exact content is a single line:
+        `hello from phase 1`
+
+        If the file is missing or the content differs, return retry with a precise issue list.
+  - id: phase-02-append-line
+    title: Append the second line
+    run:
+      prompt: |
+        Update `${workspace}/hello.txt` so its exact contents become:
+
+        hello from phase 1
+        verified by phase 2
+    verify:
+      prompt: |
+        Verify that `${workspace}/hello.txt` exists and its exact contents are:
+
+        hello from phase 1
+        verified by phase 2
+
+        If anything differs, return retry with a precise issue list.

@@ -1,0 +1,141 @@
+# spec-loop-engine
+
+`spec-loop-engine` is a small, durable, spec-driven runner for long sequential plans:
+
+- one fresh process per phase
+- one fresh verifier process after every phase
+- resumable state if the run or machine is interrupted
+- append-only journal and per-attempt artifacts
+- generic shell commands or a built-in `codex exec` adapter
+
+The default shape is: `execute -> verify -> retry/fix if needed -> next phase`.
+
+## Why this design
+
+This engine deliberately absorbs a few state-of-the-art orchestration ideas:
+
+- durable execution and resume semantics
+- exactly-ordered, auditable step history
+- explicit state transitions instead of implicit shell glue
+- idempotent retries and verifier-driven repair loops
+
+In practice that means every run writes:
+
+- a resolved spec snapshot
+- `state.json`
+- `journal.jsonl`
+- per-phase / per-attempt prompts, stdout, stderr, last messages, and parsed results
+
+## Install / run
+
+Inside this repo, the simplest entry point is:
+
+```bash
+./bin/spec-loop run specs/demo-codex.yaml
+```
+
+The wrapper uses `uv run --project` so you do not need to install the package globally.
+
+## Commands
+
+Validate a spec:
+
+```bash
+./bin/spec-loop validate specs/demo-codex.yaml
+```
+
+Run a spec:
+
+```bash
+./bin/spec-loop run specs/demo-codex.yaml
+```
+
+Override variables from the command line:
+
+```bash
+./bin/spec-loop run specs/system0-plan.yaml \
+  --set model=gpt-5.4 \
+  --set execute_effort=high \
+  --set verify_effort=medium
+```
+
+Force a fresh run instead of resuming the latest unfinished run:
+
+```bash
+./bin/spec-loop run specs/demo-codex.yaml --fresh
+```
+
+## Spec model
+
+Specs can be YAML or JSON. Top-level fields:
+
+```yaml
+version: 1
+name: demo-codex
+workspace: /absolute/or/relative/workspace
+vars:
+  model: gpt-5.4
+defaults:
+  max_attempts: 3
+  runner:
+    type: codex_exec
+    sandbox: danger-full-access
+  verifier:
+    type: codex_exec
+    sandbox: read-only
+phases:
+  - id: phase-01
+    title: Do something
+    run:
+      prompt: |
+        Do the work.
+    verify:
+      prompt: |
+        Audit the work.
+```
+
+String values can reference runtime variables with `${name}` placeholders.
+
+Useful runtime placeholders include:
+
+- `${workspace}`
+- `${spec_name}`
+- `${phase_id}`
+- `${phase_title}`
+- `${attempt}`
+- `${run_id}`
+- `${run_dir}`
+- `${phase_dir}`
+- `${attempt_dir}`
+- `${latest_verifier_feedback_path}`
+- `${latest_runner_result_path}`
+
+## Step types
+
+Two step types are supported:
+
+1. `codex_exec`
+2. `shell`
+
+`codex_exec` is a convenience adapter around `codex exec` and can enforce structured JSON output with `--output-schema`.
+
+`shell` can run either:
+
+- `program` + `args`
+- or `command` through the configured shell
+
+For `shell`, exit codes map to statuses:
+
+- success: `success_exit_codes` or `passed_exit_codes`
+- retry: `retry_exit_codes`
+- blocked: `blocked_exit_codes`
+
+## System Zero spec
+
+This repo also contains a generated spec for your System Zero phased build plan:
+
+```bash
+./bin/spec-loop run specs/system0-plan.yaml
+```
+
+It runs each phase with one fresh Codex CLI process, then runs a second fresh Codex CLI verifier in read-only mode before allowing the next phase to start.

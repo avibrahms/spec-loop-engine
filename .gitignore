@@ -1,0 +1,9 @@
+.DS_Store
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.spec-loop/
+logs/
+demo/workspace/*
+!demo/workspace/.gitkeep

@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="/Users/avi/Documents/Projects/spec-loop-engine"
+WORKSPACE="/Users/avi/Documents/Projects/system0-natural"
+SPEC="$ROOT/specs/system0-plan.yaml"
+RUN_ROOT="$WORKSPACE/.spec-loop/runs/system0-plan"
+LOG_DIR="$ROOT/logs"
+LOG="$LOG_DIR/system0-watchdog.log"
+LOCK="$LOG_DIR/system0-watchdog.lock"
+CODEX_BIN="/Applications/Codex.app/Contents/Resources/codex"
+MODEL="${SYSTEM0_WATCHDOG_MODEL:-gpt-5.4}"
+EFFORT="${SYSTEM0_WATCHDOG_EFFORT:-high}"
+RECOVERY_MAX_ATTEMPTS="${SYSTEM0_WATCHDOG_RECOVERY_MAX_ATTEMPTS:-12}"
+
+mkdir -p "$LOG_DIR"
+
+{
+  if ! mkdir "$LOCK" 2>/dev/null; then
+    printf '[%s] another watchdog check is already running\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    exit 0
+  fi
+  trap 'rmdir "$LOCK" 2>/dev/null || true' EXIT
+
+  cd "$ROOT"
+
+  ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  printf '\n[%s] system0 watchdog check\n' "$ts"
+
+  latest_run=""
+  if [[ -d "$RUN_ROOT" ]]; then
+    latest_run="$(find "$RUN_ROOT" -mindepth 1 -maxdepth 1 -type d -print | sort | tail -n 1)"
+  fi
+
+  if [[ -z "$latest_run" || ! -f "$latest_run/state.json" ]]; then
+    printf '[%s] no run state found; nothing to supervise yet\n' "$ts"
+    exit 0
+  fi
+
+  status="$(jq -r '.status // "unknown"' "$latest_run/state.json")"
+  updated_at="$(jq -r '.updated_at // ""' "$latest_run/state.json")"
+  active_phase="$(jq -r '.phases | to_entries[] | select(.value.status != "completed" and .value.status != "pending") | .key + ":" + .value.status' "$latest_run/state.json" | head -n 1)"
+  last_event="$(tail -n 1 "$latest_run/journal.jsonl" 2>/dev/null | jq -r '.event // ""' 2>/dev/null || true)"
+  last_phase="$(tail -n 1 "$latest_run/journal.jsonl" 2>/dev/null | jq -r '.phase_id // ""' 2>/dev/null || true)"
+  runner_pids="$(pgrep -f 'spec-loop run specs/system0-plan.yaml' || true)"
+  codex_pids="$(pgrep -f "$WORKSPACE/.spec-loop/runs/system0-plan/.*/codex exec|codex exec.*$WORKSPACE" || true)"
+
+  printf '[%s] run=%s status=%s updated_at=%s active=%s last_event=%s last_phase=%s runner_pids=%s codex_pids=%s\n' \
+    "$ts" "$latest_run" "$status" "$updated_at" "${active_phase:-none}" "${last_event:-none}" "${last_phase:-none}" "${runner_pids//$'\n'/,}" "${codex_pids//$'\n'/,}"
+
+  ./bin/system0-status | sed 's/^/[status] /'
+
+  if [[ "$status" == "completed" ]]; then
+    printf '[%s] run completed; watchdog check finished\n' "$ts"
+    exit 0
+  fi
+
+  if [[ -n "$runner_pids" ]]; then
+    printf '[%s] runner is alive; no intervention\n' "$ts"
+    exit 0
+  fi
+
+  if [[ "$status" == "running" || "$status" == "needs_retry" || "$status" == "needs_verification" ]]; then
+    printf '[%s] status is %s but no runner is alive; resuming same run without --fresh (recovery_max_attempts=%s)\n' "$ts" "$status" "$RECOVERY_MAX_ATTEMPTS"
+    nohup caffeinate -im ./bin/spec-loop run "$SPEC" --set "max_attempts=$RECOVERY_MAX_ATTEMPTS" >> "$LOG_DIR/system0-watchdog-resume.log" 2>&1 &
+    printf '[%s] resume pid=%s\n' "$ts" "$!"
+    exit 0
+  fi
+
+  if [[ "$status" == "failed" && "$last_event" == "phase_failed_max_attempts" ]]; then
+    printf '[%s] %s exhausted the normal attempt budget; relaunching same run with recovery_max_attempts=%s\n' "$ts" "${last_phase:-active phase}" "$RECOVERY_MAX_ATTEMPTS"
+    nohup caffeinate -im ./bin/spec-loop run "$SPEC" --set "max_attempts=$RECOVERY_MAX_ATTEMPTS" >> "$LOG_DIR/system0-watchdog-resume.log" 2>&1 &
+    printf '[%s] max-attempt recovery pid=%s\n' "$ts" "$!"
+    exit 0
+  fi
+
+  if [[ "$status" == "failed" || "$status" == "blocked" ]]; then
+    printf '[%s] run is %s; invoking Codex repair pass\n' "$ts" "$status"
+    "$CODEX_BIN" exec \
+      --ephemeral \
+      --color never \
+      -m "$MODEL" \
+      -c "model_reasoning_effort=\"$EFFORT\"" \
+      -s danger-full-access \
+      -C "$ROOT" \
+      --add-dir "$WORKSPACE" \
+      - <<'PROMPT'
+Diagnose and repair the current System0 spec-loop run.
+
+Context:
+- Engine repo: /Users/avi/Documents/Projects/spec-loop-engine
+- System0 workspace: /Users/avi/Documents/Projects/system0-natural
+- Spec: /Users/avi/Documents/Projects/spec-loop-engine/specs/system0-plan.yaml
+- Runs: /Users/avi/Documents/Projects/system0-natural/.spec-loop/runs/system0-plan
+
+Rules:
+- Do not start a fresh run unless the existing run state is unrecoverably corrupt.
+- Prefer resuming the same run with ./bin/spec-loop run specs/system0-plan.yaml.
+- Never use --fresh.
+- Do not create, switch, rename, or delete git branches.
+- Do not revert user changes.
+- If the problem is safely recoverable runner/orchestration residue, fix the root cause in spec-loop-engine, validate the spec/changed Python files, clean only runner-created artifacts, and resume under caffeinate.
+- If the problem is a genuine phase issue, let the phase executor/verifier loop handle it unless the runner itself is stuck.
+- If the latest journal event is phase_failed_max_attempts, do not start over; make the minimum safe repair and leave the run resumable. The watchdog will relaunch the same run with an extended max_attempts override.
+- If the problem is an external hard blocker, report exact evidence in logs and stop.
+PROMPT
+    runner_pids_after="$(pgrep -f 'spec-loop run specs/system0-plan.yaml' || true)"
+    if [[ -n "$runner_pids_after" ]]; then
+      printf '[%s] repair pass left runner alive: %s\n' "$ts" "${runner_pids_after//$'\n'/,}"
+      exit 0
+    fi
+
+    repaired_status="$(jq -r '.status // "unknown"' "$latest_run/state.json" 2>/dev/null || printf 'unknown')"
+    if [[ "$repaired_status" == "completed" ]]; then
+      printf '[%s] repair pass found run completed\n' "$ts"
+      exit 0
+    fi
+
+    printf '[%s] repair pass finished with status=%s and no runner alive; relaunching same run with recovery_max_attempts=%s\n' "$ts" "$repaired_status" "$RECOVERY_MAX_ATTEMPTS"
+    nohup caffeinate -im ./bin/spec-loop run "$SPEC" --set "max_attempts=$RECOVERY_MAX_ATTEMPTS" >> "$LOG_DIR/system0-watchdog-resume.log" 2>&1 &
+    printf '[%s] post-repair resume pid=%s\n' "$ts" "$!"
+    exit 0
+  fi
+
+  printf '[%s] unknown state %s; leaving untouched\n' "$ts" "$status"
+} >> "$LOG" 2>&1

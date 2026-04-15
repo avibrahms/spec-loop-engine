@@ -1,0 +1,1958 @@
+version: 1
+name: system0-plan
+workspace: /Users/avi/Documents/Projects/system0-natural
+vars:
+  model: gpt-5.4
+  execute_effort: high
+  verify_effort: medium
+  max_attempts: 5
+defaults:
+  max_attempts: ${max_attempts}
+  runner:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: ${model}
+    reasoning_effort: ${execute_effort}
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    git_finalize_retries: 2
+    add_dirs:
+    - /Users/avi/Documents/Projects/system0-natural
+  verifier:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: ${model}
+    reasoning_effort: ${verify_effort}
+    sandbox: workspace-write
+    skip_git_repo_check: true
+    env:
+      PATH: /opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/avi/.local/bin:/Applications/Codex.app/Contents/Resources
+      PYTHONDONTWRITEBYTECODE: '1'
+      TMPDIR: ${attempt_dir}/verifier-tmp
+      TMP: ${attempt_dir}/verifier-tmp
+      TEMP: ${attempt_dir}/verifier-tmp
+      XDG_CACHE_HOME: ${attempt_dir}/verifier-cache
+    add_dirs:
+    - /Users/avi/Documents/Projects/system0-natural
+phases:
+- id: phase-00-prerequisites
+  title: Prerequisites
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-00-prerequisites/PLAN.md
+  run:
+    reasoning_effort: medium
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-00-prerequisites/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-00-prerequisites/PLAN.md`
+
+
+      Phase title: Prerequisites
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: low
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-00-prerequisites/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-00-prerequisites/PLAN.md`
+
+
+      Phase title: Prerequisites
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-01-protocol-spec
+  title: Protocol Spec
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-01-protocol-spec/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-01-protocol-spec/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-01-protocol-spec/PLAN.md`
+
+
+      Phase title: Protocol Spec
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-01-protocol-spec/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-01-protocol-spec/PLAN.md`
+
+
+      Phase title: Protocol Spec
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-02-sz-cli
+  title: Sz Cli
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-02-sz-cli/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-02-sz-cli/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-02-sz-cli/PLAN.md`
+
+
+      Phase title: Sz Cli
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-02-sz-cli/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-02-sz-cli/PLAN.md`
+
+
+      Phase title: Sz Cli
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-03-universal-interfaces
+  title: Universal Interfaces
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-03-universal-interfaces/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-03-universal-interfaces/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-03-universal-interfaces/PLAN.md`
+
+
+      Phase title: Universal Interfaces
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-03-universal-interfaces/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-03-universal-interfaces/PLAN.md`
+
+
+      Phase title: Universal Interfaces
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-04-reconciliation-engine
+  title: Reconciliation Engine
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-04-reconciliation-engine/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-04-reconciliation-engine/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-04-reconciliation-engine/PLAN.md`
+
+
+      Phase title: Reconciliation Engine
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-04-reconciliation-engine/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-04-reconciliation-engine/PLAN.md`
+
+
+      Phase title: Reconciliation Engine
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-05-host-adapters
+  title: Host Adapters
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-05-host-adapters/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-05-host-adapters/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-05-host-adapters/PLAN.md`
+
+
+      Phase title: Host Adapters
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-05-host-adapters/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-05-host-adapters/PLAN.md`
+
+
+      Phase title: Host Adapters
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-06-absorb-workflow
+  title: Absorb Workflow
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-06-absorb-workflow/PLAN.md
+  run:
+    reasoning_effort: xhigh
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-06-absorb-workflow/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-06-absorb-workflow/PLAN.md`
+
+
+      Phase title: Absorb Workflow
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: high
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-06-absorb-workflow/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-06-absorb-workflow/PLAN.md`
+
+
+      Phase title: Absorb Workflow
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-07-repo-genesis
+  title: Repo Genesis
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-07-repo-genesis/PLAN.md
+  run:
+    reasoning_effort: xhigh
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-07-repo-genesis/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-07-repo-genesis/PLAN.md`
+
+
+      Phase title: Repo Genesis
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: high
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-07-repo-genesis/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-07-repo-genesis/PLAN.md`
+
+
+      Phase title: Repo Genesis
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-08-port-modules
+  title: Port Modules
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-08-port-modules/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-08-port-modules/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-08-port-modules/PLAN.md`
+
+
+      Phase title: Port Modules
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-08-port-modules/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-08-port-modules/PLAN.md`
+
+
+      Phase title: Port Modules
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-09-catalog-and-distribution
+  title: Catalog And Distribution
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-09-catalog-and-distribution/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-09-catalog-and-distribution/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-09-catalog-and-distribution/PLAN.md`
+
+
+      Phase title: Catalog And Distribution
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-09-catalog-and-distribution/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-09-catalog-and-distribution/PLAN.md`
+
+
+      Phase title: Catalog And Distribution
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-10-cloud-and-billing
+  title: Cloud And Billing
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-10-cloud-and-billing/PLAN.md
+  run:
+    reasoning_effort: xhigh
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-10-cloud-and-billing/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-10-cloud-and-billing/PLAN.md`
+
+
+      Phase title: Cloud And Billing
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: high
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-10-cloud-and-billing/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-10-cloud-and-billing/PLAN.md`
+
+
+      Phase title: Cloud And Billing
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-11-website
+  title: Website
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-11-website/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-11-website/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-11-website/PLAN.md`
+
+
+      Phase title: Website
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-11-website/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-11-website/PLAN.md`
+
+
+      Phase title: Website
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-12-test-static-template
+  title: Test Static Template
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-12-test-static-template/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-12-test-static-template/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-12-test-static-template/PLAN.md`
+
+
+      Phase title: Test Static Template
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-12-test-static-template/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-12-test-static-template/PLAN.md`
+
+
+      Phase title: Test Static Template
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-13-test-dynamic-template
+  title: Test Dynamic Template
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-13-test-dynamic-template/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-13-test-dynamic-template/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-13-test-dynamic-template/PLAN.md`
+
+
+      Phase title: Test Dynamic Template
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-13-test-dynamic-template/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-13-test-dynamic-template/PLAN.md`
+
+
+      Phase title: Test Dynamic Template
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-14-test-absorb-os-feature
+  title: Test Absorb Os Feature
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-14-test-absorb-os-feature/PLAN.md
+  run:
+    reasoning_effort: xhigh
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-14-test-absorb-os-feature/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-14-test-absorb-os-feature/PLAN.md`
+
+
+      Phase title: Test Absorb Os Feature
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: high
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-14-test-absorb-os-feature/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-14-test-absorb-os-feature/PLAN.md`
+
+
+      Phase title: Test Absorb Os Feature
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-15-launch
+  title: Launch
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-15-launch/PLAN.md
+  run:
+    reasoning_effort: high
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-15-launch/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-15-launch/PLAN.md`
+
+
+      Phase title: Launch
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: medium
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-15-launch/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-15-launch/PLAN.md`
+
+
+      Phase title: Launch
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '
+- id: phase-16-reconstruct-connection-engine
+  title: Reconstruct Connection Engine
+  vars:
+    phase_plan: /Users/avi/Documents/Projects/system0-natural/plan/phase-16-reconstruct-connection-engine/PLAN.md
+  run:
+    reasoning_effort: xhigh
+    prompt: 'Execute the System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-16-reconstruct-connection-engine/PLAN.md`.
+
+
+      Treat these files as the source of truth before you change anything:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-16-reconstruct-connection-engine/PLAN.md`
+
+
+      Phase title: Reconstruct Connection Engine
+
+
+      Required behavior:
+
+      - Follow the phase plan literally.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Never create, switch, rename, or delete git branches.
+
+      - Stay on the current branch for the entire run.
+
+      - If a phase plan asks for branch operations, merge steps, or exact one-commit
+      branch rules, treat that language as overridden by this spec and continue in
+      current-branch checkpoint mode instead.
+
+      - Perform the actual implementation, execution, testing, and verification the
+      phase requires.
+
+      - If prior verifier feedback exists, read it first and fix every issue before
+      doing anything else.
+
+      - Do not return success while the git worktree is dirty, while uncommitted or
+      untracked phase residue remains, or while the current-branch checkpoint commit(s)
+      for this phase are still missing.
+
+      - Stop only when this phase is genuinely ready for independent verification,
+      or when an external blocker prevents progress.
+
+      - Do not drift into later phases.
+
+
+      In `summary`, say what is now complete.
+
+      In `artifacts`, list the most important files changed.
+
+      In `resume_hint`, give the exact next move if another executor has to continue
+      from here.
+
+      '
+  verify:
+    reasoning_effort: high
+    prompt: 'Audit the just-finished System Zero phase defined in `/Users/avi/Documents/Projects/system0-natural/plan/phase-16-reconstruct-connection-engine/PLAN.md`.
+
+
+      Treat these files as the source of truth:
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/README.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/EXECUTION_RULES.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/PROTOCOL_SPEC.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/ARCHITECTURE.md`
+
+      - `/Users/avi/Documents/Projects/system0-natural/plan/phase-16-reconstruct-connection-engine/PLAN.md`
+
+
+      Phase title: Reconstruct Connection Engine
+
+
+      Verification requirements:
+
+      - Independently verify the acceptance criteria and the concrete outputs promised
+      by the phase plan.
+
+      - Canonical git policy for this spec: current-branch checkpoint mode.
+
+      - Treat any git branch creation, switching, renaming, or deletion as a failure
+      against this spec.
+
+      - Do not require phase branches, phase merges, or exact one-commit branch counts
+      even if stale plan text still mentions them.
+
+      - Require a clean current branch with the phase checkpoint commit(s) already
+      recorded and no git residue left for a cleanup attempt.
+
+      - Check for hidden corruption, partial execution, unverified claims, missed
+      follow-through, and interruption residue.
+
+      - Check for obvious regressions introduced into earlier completed work.
+
+      - Return `passed` only if the phase is actually clean and complete enough to
+      let the next phase begin.
+
+      - Return `retry` with concrete issues if anything remains to fix or verify.
+
+      - Return `blocked` only for external blockers.
+
+      '

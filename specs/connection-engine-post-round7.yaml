@@ -1,0 +1,1375 @@
+version: 1
+name: connection-engine-post-round7
+workspace: /Users/avi/Documents/Misc/connection-engine
+run_root: /Users/avi/Documents/Misc/connection-engine/.spec-loop/runs/connection-engine-post-round7
+vars:
+  rules_path: /Users/avi/Documents/Misc/connection-engine/core/system/plans/AGENT-EXECUTION-RULES.md
+  master_26r_path: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md
+defaults:
+  max_attempts: 4
+phases:
+- id: step-14r-0
+  title: Step 14R.0 - 26R 0 PROJECT FOCUS RETIREMENT
+  max_attempts: 4
+  vars:
+    step_number: 14R.0
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-0-PROJECT-FOCUS-RETIREMENT.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-0-PROJECT-FOCUS-RETIREMENT.md. Follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Finish the job. Rename nothing on disk; pause via registry only.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-0-PROJECT-FOCUS-RETIREMENT.md and every file it created or modified. Verify: (1) every deliverable exists and is fully wired \u2014 no stubs, no TODOs, no dead imports; (2) no silent corruption \u2014 configs parse, module-registry.json is valid, maintenance-registry.yaml still parses after commenting-out, PAUSED banners present in every paused module's CLAUDE.md. If ANY issue is found, output at the end a FIX BLOCK: a numbered list with exact file path, what is wrong, and the exact fix needed.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next\
+      \ dependent phase to begin.\n"
+- id: step-14r-1
+  title: Step 14R.1 - 26R 1 NAMING ABSTRACTION
+  max_attempts: 4
+  vars:
+    step_number: 14R.1
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-1-NAMING-ABSTRACTION.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-1-NAMING-ABSTRACTION.md. Follow Rule 8 execution flow exactly. Do all the work, don't just plan it. ABSOLUTE: touch no file outside the paths listed in the phase. Do not rename internal dirs. Do not rewrite imports. Build the translation layer and CI guard only. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-1-NAMING-ABSTRACTION.md and every file it created or modified. Verify: naming-invariant-check.py exits 0; ~/.system0/ view directory bootstrapped; zero touches to internal module dirs (git diff --stat confirms). If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-2
+  title: Step 14R.2 - 26R 2 CLOUD NEUTRAL INFRA
+  max_attempts: 4
+  vars:
+    step_number: 14R.2
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-2-CLOUD-NEUTRAL-INFRA.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-2-CLOUD-NEUTRAL-INFRA.md. Follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every Terraform module, every Dockerfile, every CI matrix. Both fly-production and aws-production terraform plans MUST pass. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-2-CLOUD-NEUTRAL-INFRA.md and every file it created or modified. Verify: both terraform plans pass; multi-arch Docker images build; config contract complete; cutover runbook actionable. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-3
+  title: Step 14R.3 - 26R 3 PRICING ENTITLEMENTS
+  max_attempts: 4
+  vars:
+    step_number: 14R.3
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-3-PRICING-ENTITLEMENTS.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-3-PRICING-ENTITLEMENTS.md. Follow Rule 8 execution flow exactly. Author every deliverable: pricing-matrix.yaml, entitlements.rego, cost-model.yaml, pricing-rationale.md, upgrade-triggers.md, pricing-change-runbook.md. Use commercial judgment on \xB130% price refinements. Finish the job.\n\nSpec-loop constraints for this run:\n- Stay on the current git branch for the entire phase.\n- Never create, switch, rename, delete, or tag branches.\n- Never create a git worktree.\n- If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.\n- Do the implementation, execution, testing, and verification work the phase requires inside the workspace.\n- If prior verifier feedback exists, fix every issue before\
+      \ doing any net-new work.\n- Stop only when this phase is genuinely ready for independent verification or is externally blocked.\n"
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: low
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-3-PRICING-ENTITLEMENTS.md and every file it created or modified. Verify: pricing-matrix.yaml validates against schema; OPA tests pass; every tier has a break-even number; every feature flag in entitlements.rego exists in pricing-matrix.yaml. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-5
+  title: Step 14R.5 - 26R 5 OPEN SOURCE SPLIT
+  max_attempts: 4
+  vars:
+    step_number: 14R.5
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-5-OPEN-SOURCE-SPLIT.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-5-OPEN-SOURCE-SPLIT.md. Follow Rule 8 execution flow exactly. Classify every tracked file, name the OSS repos, build the vault-egress CI guard. This is a POINT-OF-NO-RETURN gate: after this ships, OSS extractions become irreversible. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-5-OPEN-SOURCE-SPLIT.md and every file it created or modified. Verify: every tracked file classified exactly once; vault-egress-check.py catches simulated leaks; every OSS repo has funnel metrics defined; "Point of No Return" acknowledgment block present. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-4
+  title: Step 14R.4 - 26R 4 COMPOSABLE API SURFACE
+  max_attempts: 4
+  vars:
+    step_number: 14R.4
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-4-COMPOSABLE-API-SURFACE.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-4-COMPOSABLE-API-SURFACE.md. Follow Rule 8 execution flow exactly. Freeze api-surface.yaml, regenerate OpenAPI, author SDK affordances, conventions, vault-api contract. Every endpoint tied to a tier floor. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-4-COMPOSABLE-API-SURFACE.md and every file it created or modified. Verify: openapi-spec-validator passes; every endpoint in api-surface.yaml appears in OpenAPI; Vault-gated endpoints carry x-vault-scope; direct vault imports CI check passes. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-6
+  title: Step 14R.6 - 26R 6 DISTRIBUTION PIPELINES
+  max_attempts: 4
+  vars:
+    step_number: 14R.6
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-6-DISTRIBUTION-PIPELINES.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-6-DISTRIBUTION-PIPELINES.md. Follow Rule 8 execution flow exactly. Build modules/system-zero/distribution/ as the single source of truth; author release.yml, package manifests, s0-upgrade spec, hardening plan. Release dry-run MUST pass. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-6-DISTRIBUTION-PIPELINES.md and every file it created or modified. Verify: release.yml dry-run succeeds on every channel; cosign+SBOM attach correctly; s0 upgrade spec diffs versions; naming-invariant-check and vault-egress-check pass on published artifacts. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-7
+  title: Step 14R.7 - 26R 7 GROWTH GTM
+  max_attempts: 4
+  vars:
+    step_number: 14R.7
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-7-GROWTH-GTM.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-7-GROWTH-GTM.md. Follow Rule 8 execution flow exactly. Author the dated 90-day plan, launch assets, funnel spec, community surface, referral program, kill-switches, dogfood-trace. Every asset must tie to a real capability call. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-7-GROWTH-GTM.md and every file it created or modified. Verify: every week of the 90-day plan has owner/metric/kill-switch; every launch asset has a dated slot; funnel-spec.md UTMs match landing implementation; weekly retro task registered in maintenance-registry. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-8
+  title: Step 14R.8 - 26R 8 UNIT ECONOMICS DASHBOARD
+  max_attempts: 4
+  vars:
+    step_number: 14R.8
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/PHASE-26R-8-UNIT-ECONOMICS-DASHBOARD.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md and core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md, then execute core/system/plans/phase-26R-strategic-realignment/PHASE-26R-8-UNIT-ECONOMICS-DASHBOARD.md. Follow Rule 8 execution flow exactly. Author cost-events migration, attribution scripts, 6 dashboard cards, alerts, break-even tracker, CSV export. Every metric traces to pricing-matrix or cost-model. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/phase-26R-strategic-realignment/PHASE-26R-8-UNIT-ECONOMICS-DASHBOARD.md and every file it created or modified. Verify: attribution scripts produce correct numbers on test fixtures; all 6 dashboard cards render; alert wiring works; CSV export task registered. Every metric sourced from pricing-matrix or cost-model. If ANY issue is found, output FIX BLOCK.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-14r-gate
+  title: Step 14R Gate - Verification Gate
+  max_attempts: 3
+  vars:
+    step_number: 14R.GATE
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: Read `/Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md` and evaluate the "Verification Gate (single bar before proceeding to Round 8)" checklist against the current repo state. All 6 bullets must pass before Round 8 can begin. If any bullet fails, return retry with one issue per failing bullet and the exact file or subsystem that must be fixed. Stay on the current git branch and do not create tags, branches, or worktrees.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read `/Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26R-strategic-realignment/MASTER-PHASE-26R.md` and evaluate the "Verification Gate (single bar before proceeding to Round 8)" checklist against the current repo state. All 6 bullets must pass before Round 8 can begin. If any bullet fails, return retry with one issue per failing bullet and the exact file or subsystem that must be fixed. Stay on the current git branch and do not create tags, branches, or worktrees.
+
+      Structured output requirements for this spec runner:
+      - Do not modify files.
+      - If you find issues, convert the FIX BLOCK into structured JSON.
+      - Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.
+      - Put the consolidated fix summary in `repair_hint`.
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.
+- id: step-15
+  title: Step 15 - 26 13 CLOUD COMPARTMENTALIZATION
+  max_attempts: 4
+  vars:
+    step_number: '15'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-26-total-architecture-upgrade/PHASE-26-13-CLOUD-COMPARTMENTALIZATION.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-26-total-architecture-upgrade/PHASE-26-13-CLOUD-COMPARTMENTALIZATION.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+      - Explicitly consume the 26R outputs such as `core/system/data/pricing-matrix.yaml`, `api-surface.yaml`, `open-source-classification.yaml`, and `modules/system-zero/distribution/` where relevant instead of re-deriving them.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-26-total-architecture-upgrade/PHASE-26-13-CLOUD-COMPARTMENTALIZATION.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary\
+      \ in `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-16
+  title: Step 16 - 25 0 FREEZE AND INVENTORY
+  max_attempts: 4
+  vars:
+    step_number: '16'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-0-FREEZE-AND-INVENTORY.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: low
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-0-FREEZE-AND-INVENTORY.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-0-FREEZE-AND-INVENTORY.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-17
+  title: Step 17 - 25 1 PROTOCOL SPEC EXTRACTION
+  max_attempts: 4
+  vars:
+    step_number: '17'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-1-PROTOCOL-SPEC-EXTRACTION.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-1-PROTOCOL-SPEC-EXTRACTION.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: low
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-1-PROTOCOL-SPEC-EXTRACTION.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in\
+      \ `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-22
+  title: Step 22 - 0 ANONYMIZATION EXTRACTION
+  max_attempts: 4
+  vars:
+    step_number: '22'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-0-ANONYMIZATION-EXTRACTION.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-0-ANONYMIZATION-EXTRACTION.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-0-ANONYMIZATION-EXTRACTION.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-29
+  title: Step 29 - 0 SDK FOUNDATION
+  max_attempts: 4
+  vars:
+    step_number: '29'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/skeleton-and-flesh/PHASE-0-SDK-FOUNDATION.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/skeleton-and-flesh/PHASE-0-SDK-FOUNDATION.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/skeleton-and-flesh/PHASE-0-SDK-FOUNDATION.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n- Return `passed`\
+      \ only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-18
+  title: Step 18 - 25 2 RUNTIME DECOUPLING
+  max_attempts: 4
+  vars:
+    step_number: '18'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-2-RUNTIME-DECOUPLING.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-2-RUNTIME-DECOUPLING.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-2-RUNTIME-DECOUPLING.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-23
+  title: Step 23 - 1 CONTAINERIZATION CLOUD INFRASTRUCTURE
+  max_attempts: 4
+  vars:
+    step_number: '23'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-1-CONTAINERIZATION-CLOUD-INFRASTRUCTURE.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-1-CONTAINERIZATION-CLOUD-INFRASTRUCTURE.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-1-CONTAINERIZATION-CLOUD-INFRASTRUCTURE.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in\
+      \ `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-30
+  title: Step 30 - 1 SPEC AND CONTRACT ENGINE
+  max_attempts: 4
+  vars:
+    step_number: '30'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/skeleton-and-flesh/PHASE-1-SPEC-AND-CONTRACT-ENGINE.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/skeleton-and-flesh/PHASE-1-SPEC-AND-CONTRACT-ENGINE.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: low
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/skeleton-and-flesh/PHASE-1-SPEC-AND-CONTRACT-ENGINE.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n- Return\
+      \ `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-19
+  title: Step 19 - 25 3 REPEATABILITY HARNESS
+  max_attempts: 4
+  vars:
+    step_number: '19'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-3-REPEATABILITY-HARNESS.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-3-REPEATABILITY-HARNESS.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-3-REPEATABILITY-HARNESS.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-24
+  title: Step 24 - 2 MULTI TENANT API LAYER
+  max_attempts: 4
+  vars:
+    step_number: '24'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-2-MULTI-TENANT-API-LAYER.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-2-MULTI-TENANT-API-LAYER.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-2-MULTI-TENANT-API-LAYER.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-31
+  title: Step 31 - 6 CLOUD API LAYER
+  max_attempts: 4
+  vars:
+    step_number: '31'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/skeleton-and-flesh/PHASE-6-CLOUD-API-LAYER.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/skeleton-and-flesh/PHASE-6-CLOUD-API-LAYER.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/skeleton-and-flesh/PHASE-6-CLOUD-API-LAYER.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n- Return `passed`\
+      \ only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-20
+  title: Step 20 - 25 4 MODULE ROLLOUT
+  max_attempts: 4
+  vars:
+    step_number: '20'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-4-MODULE-ROLLOUT.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-4-MODULE-ROLLOUT.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-4-MODULE-ROLLOUT.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-25
+  title: Step 25 - 1 API SURFACE AND CONTRACT DESIGN
+  max_attempts: 4
+  vars:
+    step_number: '25'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-1-API-SURFACE-AND-CONTRACT-DESIGN.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-1-API-SURFACE-AND-CONTRACT-DESIGN.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-1-API-SURFACE-AND-CONTRACT-DESIGN.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-32
+  title: Step 32 - 7 CONTINUOUS REFINEMENT
+  max_attempts: 4
+  vars:
+    step_number: '32'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/skeleton-and-flesh/PHASE-7-CONTINUOUS-REFINEMENT.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/skeleton-and-flesh/PHASE-7-CONTINUOUS-REFINEMENT.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: low
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/skeleton-and-flesh/PHASE-7-CONTINUOUS-REFINEMENT.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n- Return\
+      \ `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-33
+  title: Step 33 - 4 CLIENT SDK AND INTEGRATION LAYER
+  max_attempts: 4
+  vars:
+    step_number: '33'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-4-CLIENT-SDK-AND-INTEGRATION-LAYER.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-4-CLIENT-SDK-AND-INTEGRATION-LAYER.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-4-CLIENT-SDK-AND-INTEGRATION-LAYER.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-36
+  title: Step 36 - 4 SKILL MARKETPLACE NETWORK EFFECTS
+  max_attempts: 4
+  vars:
+    step_number: '36'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-4-SKILL-MARKETPLACE-NETWORK-EFFECTS.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-4-SKILL-MARKETPLACE-NETWORK-EFFECTS.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-4-SKILL-MARKETPLACE-NETWORK-EFFECTS.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-21
+  title: Step 21 - 25 5 ENFORCEMENT AND GUARDRAILS
+  max_attempts: 4
+  vars:
+    step_number: '21'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-5-ENFORCEMENT-AND-GUARDRAILS.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-5-ENFORCEMENT-AND-GUARDRAILS.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/phase-25-markdown-spec-repeatability/PHASE-25-5-ENFORCEMENT-AND-GUARDRAILS.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary\
+      \ in `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-26
+  title: Step 26 - 2 SERVER RUNTIME AND MULTI TENANCY
+  max_attempts: 4
+  vars:
+    step_number: '26'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-2-SERVER-RUNTIME-AND-MULTI-TENANCY.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-2-SERVER-RUNTIME-AND-MULTI-TENANCY.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-2-SERVER-RUNTIME-AND-MULTI-TENANCY.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-34
+  title: Step 34 - 5 DESKTOP APP AND LOCAL CLIENT
+  max_attempts: 4
+  vars:
+    step_number: '34'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-5-DESKTOP-APP-AND-LOCAL-CLIENT.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-5-DESKTOP-APP-AND-LOCAL-CLIENT.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-5-DESKTOP-APP-AND-LOCAL-CLIENT.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-35
+  title: Step 35 - 6 ENTERPRISE ON PREMISES PACKAGING
+  max_attempts: 4
+  vars:
+    step_number: '35'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-6-ENTERPRISE-ON-PREMISES-PACKAGING.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-6-ENTERPRISE-ON-PREMISES-PACKAGING.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-6-ENTERPRISE-ON-PREMISES-PACKAGING.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-27
+  title: Step 27 - 3 AUTHENTICATION ENTITLEMENTS AND BILLING
+  max_attempts: 4
+  vars:
+    step_number: '27'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-3-AUTHENTICATION-ENTITLEMENTS-AND-BILLING.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: high
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-3-AUTHENTICATION-ENTITLEMENTS-AND-BILLING.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: medium
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-3-AUTHENTICATION-ENTITLEMENTS-AND-BILLING.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary\
+      \ in `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-37
+  title: Step 37 - 7 DISTRIBUTION VALIDATION AND COMMERCIAL READINESS
+  max_attempts: 4
+  vars:
+    step_number: '37'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/hosted-api-and-distribution/PHASE-7-DISTRIBUTION-VALIDATION-AND-COMMERCIAL-READINESS.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/hosted-api-and-distribution/PHASE-7-DISTRIBUTION-VALIDATION-AND-COMMERCIAL-READINESS.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/hosted-api-and-distribution/PHASE-7-DISTRIBUTION-VALIDATION-AND-COMMERCIAL-READINESS.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix\
+      \ summary in `repair_hint`.\n- Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-27-5a
+  title: Step 27.5a - S SECRETS ROTATION
+  max_attempts: 4
+  vars:
+    step_number: 27.5a
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-S-SECRETS-ROTATION.md
+  run:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: danger-full-access
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-S-SECRETS-ROTATION.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: low
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-S-SECRETS-ROTATION.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n- Return\
+      \ `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-28
+  title: Step 28 - 3 CLIENT DISTRIBUTION
+  max_attempts: 4
+  vars:
+    step_number: '28'
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-3-CLIENT-DISTRIBUTION.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-3-CLIENT-DISTRIBUTION.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-3-CLIENT-DISTRIBUTION.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"
+- id: step-28-5a
+  title: Step 28.5a - DR DISTRIBUTED ROLLBACK
+  max_attempts: 4
+  vars:
+    step_number: 28.5a
+    phase_file: /Users/avi/Documents/Misc/connection-engine/core/system/plans/system0-cloud-distribution/PHASE-DR-DISTRIBUTED-ROLLBACK.md
+  run:
+    type: claude_exec
+    claude_bin: /Users/avi/.local/bin/claude
+    model: opus
+    reasoning_effort: high
+    permission_mode: bypassPermissions
+    dangerously_skip_permissions: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: |
+      Read core/system/plans/AGENT-EXECUTION-RULES.md, then execute core/system/plans/system0-cloud-distribution/PHASE-DR-DISTRIBUTED-ROLLBACK.md. follow Rule 8 execution flow exactly. Do all the work, don't just plan it. Build every deliverable, wire every connection, verify every requirement. No stubs, no TODOs, no placeholders. Every file you create must be imported, registered, and reachable. Finish the job.
+
+      Spec-loop constraints for this run:
+      - Stay on the current git branch for the entire phase.
+      - Never create, switch, rename, delete, or tag branches.
+      - Never create a git worktree.
+      - If the phase file mentions branch names, tags, or checkout instructions, treat them as overridden by this spec and continue on the current branch.
+      - Do the implementation, execution, testing, and verification work the phase requires inside the workspace.
+      - If prior verifier feedback exists, fix every issue before doing any net-new work.
+      - Stop only when this phase is genuinely ready for independent verification or is externally blocked.
+      - Treat completed 26R outputs as frozen inputs. Consume them; do not reopen their strategic decisions.
+  verify:
+    type: codex_exec
+    codex_bin: /Applications/Codex.app/Contents/Resources/codex
+    model: gpt-5.4
+    reasoning_effort: medium
+    sandbox: read-only
+    skip_git_repo_check: true
+    add_dirs:
+    - /Users/avi/Documents/Misc/connection-engine
+    prompt: "Read core/system/plans/system0-cloud-distribution/PHASE-DR-DISTRIBUTED-ROLLBACK.md and every file it created or modified. Verify: (1) every deliverable listed in the phase exists and is fully wired \u2014 no stubs, no TODOs, no dead imports, no orphaned references; (2) no silent corruption \u2014 configs parse, schemas validate, cross-file references resolve, and nothing was overwritten or regressed that shouldn't have been. If ANY issue is found, output at the end a FIX BLOCK: a numbered list of every issue with the exact file path, what is wrong, and the exact fix needed \u2014 ready to copy-paste directly to the executor model.\n\nStructured output requirements for this spec runner:\n- Do not modify files.\n- If you find issues, convert the FIX BLOCK into structured JSON.\n- Put each numbered FIX BLOCK item into `issues[]` as one self-contained remediation item with exact path, what is wrong, and the exact fix needed.\n- Put the consolidated fix summary in `repair_hint`.\n\
+      - Return `passed` only when the phase is truly clean enough for the next dependent phase to begin.\n"

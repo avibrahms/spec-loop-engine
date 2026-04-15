@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="/Users/avi/Documents/Projects/spec-loop-engine"
+RUNS_DIR="/Users/avi/Documents/Projects/system0-natural/.spec-loop/runs/system0-plan"
+LOGS_DIR="$ROOT/logs"
+
+latest_match() {
+  local pattern="$1"
+  python3 - "$pattern" <<'PY'
+import glob
+import os
+import sys
+
+matches = glob.glob(sys.argv[1])
+if matches:
+    matches.sort(key=lambda p: os.path.getmtime(p), reverse=True)
+    print(matches[0])
+PY
+}
+
+detect_runner_pid() {
+  python3 - <<'PY'
+import subprocess
+
+try:
+    out = subprocess.check_output(
+        ["pgrep", "-f", "spec-loop run specs/system0-plan.yaml"],
+        text=True,
+    )
+except Exception:
+    raise SystemExit(0)
+
+candidates = []
+for pid_text in out.split():
+    try:
+        command = subprocess.check_output(
+            ["ps", "-p", pid_text, "-o", "command="],
+            text=True,
+        ).strip()
+    except Exception:
+        continue
+    if not command or "pgrep -f" in command:
+        continue
+    score = 0
+    if "/.venv/bin/python" in command and "spec-loop run" in command:
+        score = 3
+    elif "uv run" in command and "spec-loop run" in command:
+        score = 2
+    elif "caffeinate" in command and "spec-loop run" in command:
+        score = 1
+    if score:
+        candidates.append((score, int(pid_text)))
+
+if candidates:
+    candidates.sort(reverse=True)
+    print(candidates[0][1])
+PY
+}
+
+LATEST_RUN="$(find "$RUNS_DIR" -maxdepth 1 -mindepth 1 -type d 2>/dev/null | sort | tail -n 1 || true)"
+RUN_STAMP=""
+LATEST_LOG=""
+LATEST_PIDFILE=""
+PID=""
+
+if [[ -n "$LATEST_RUN" ]]; then
+  RUN_STAMP="$(basename "$LATEST_RUN")"
+  if [[ -f "$LOGS_DIR/system0-plan-$RUN_STAMP.log" ]]; then
+    LATEST_LOG="$LOGS_DIR/system0-plan-$RUN_STAMP.log"
+  fi
+  if [[ -f "$LOGS_DIR/system0-plan-$RUN_STAMP.pid" ]]; then
+    LATEST_PIDFILE="$LOGS_DIR/system0-plan-$RUN_STAMP.pid"
+  fi
+fi
+
+if [[ -z "$LATEST_LOG" ]]; then
+  LATEST_LOG="$(latest_match "$LOGS_DIR/system0-plan-*.log")"
+fi
+if [[ -z "$LATEST_PIDFILE" ]]; then
+  LATEST_PIDFILE="$(latest_match "$LOGS_DIR/system0-plan-*.pid")"
+fi
+
+if [[ -n "$LATEST_PIDFILE" && -f "$LATEST_PIDFILE" ]]; then
+  PID="$(tr -d '[:space:]' < "$LATEST_PIDFILE")"
+fi
+
+if [[ -z "$PID" ]] || ! ps -p "$PID" >/dev/null 2>&1; then
+  DETECTED_PID="$(detect_runner_pid || true)"
+  if [[ -n "$DETECTED_PID" ]]; then
+    PID="$DETECTED_PID"
+  fi
+fi
+
+echo "System0 Runner Status"
+echo "====================="
+echo "Repo: $ROOT"
+echo "Runs dir: $RUNS_DIR"
+echo
+
+if [[ -n "$PID" ]]; then
+  if ps -p "$PID" >/dev/null 2>&1; then
+    echo "Process: RUNNING (pid $PID)"
+  else
+    echo "Process: NOT RUNNING (last pid $PID)"
+  fi
+else
+  echo "Process: UNKNOWN"
+fi
+
+if [[ -n "$LATEST_LOG" ]]; then
+  echo "Log: $LATEST_LOG"
+fi
+
+if [[ -z "$LATEST_RUN" ]]; then
+  echo
+  echo "No run directory found yet."
+  exit 0
+fi
+
+STATE="$LATEST_RUN/state.json"
+JOURNAL="$LATEST_RUN/journal.jsonl"
+
+echo "Run dir: $LATEST_RUN"
+echo
+
+python3 - "$STATE" "$JOURNAL" <<'PY'
+import json
+import pathlib
+import sys
+
+state_path = pathlib.Path(sys.argv[1])
+journal_path = pathlib.Path(sys.argv[2])
+
+state = json.loads(state_path.read_text())
+print(f"Run id: {state['run_id']}")
+print(f"Overall status: {state['status']}")
+print(f"Started at: {state['started_at']}")
+print(f"Updated at: {state['updated_at']}")
+print()
+print("Phases:")
+for phase_id, payload in state["phases"].items():
+    attempts = len(payload.get("attempts", []))
+    print(f"  {phase_id:40} {payload['status']:12} attempts={attempts}")
+
+blocked = [
+    (phase_id, payload)
+    for phase_id, payload in state["phases"].items()
+    if payload.get("status") == "blocked" and payload.get("attempts")
+]
+if blocked:
+    print()
+    print("Current blocker:")
+    phase_id, payload = blocked[-1]
+    runner = payload["attempts"][-1].get("runner", {})
+    print(f"  phase: {phase_id}")
+    if runner.get("summary"):
+      print(f"  summary: {runner['summary']}")
+    if runner.get("resume_hint"):
+      print(f"  resume: {runner['resume_hint']}")
+
+if journal_path.exists():
+    print()
+    print("Recent journal:")
+    lines = journal_path.read_text().strip().splitlines()[-8:]
+    for line in lines:
+        event = json.loads(line)
+        bits = [event.get("time", ""), event.get("event", "")]
+        if "phase_id" in event:
+            bits.append(event["phase_id"])
+        if "attempt" in event:
+            bits.append(f"attempt={event['attempt']}")
+        if "status" in event:
+            bits.append(f"status={event['status']}")
+        if "summary" in event:
+            bits.append(f"summary={event['summary']}")
+        print("  " + " | ".join(bits))
+PY
+
+if [[ -d "$LATEST_RUN/phases" ]]; then
+  echo
+  echo "Phase artifact dirs:"
+  find "$LATEST_RUN/phases" -maxdepth 2 -type d | sort | sed 's#^#  #'
+fi
+
+if [[ -n "$LATEST_LOG" && -f "$LATEST_LOG" ]]; then
+  echo
+  echo "Log tail:"
+  tail -n 10 "$LATEST_LOG" | sed 's#^#  #'
+fi

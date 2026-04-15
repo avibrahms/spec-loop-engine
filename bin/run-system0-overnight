@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+python3 - <<'PY'
+import datetime
+import pathlib
+import subprocess
+
+repo = pathlib.Path("/Users/avi/Documents/Projects/spec-loop-engine")
+logs = repo / "logs"
+logs.mkdir(parents=True, exist_ok=True)
+
+stamp = datetime.datetime.now(datetime.UTC).strftime("%Y%m%dT%H%M%SZ")
+log = logs / f"system0-plan-{stamp}.log"
+pidfile = logs / f"system0-plan-{stamp}.pid"
+
+cmd = [
+    "/bin/bash",
+    "-lc",
+    f"cd {repo} && ./bin/spec-loop run specs/system0-plan.yaml --fresh",
+]
+
+with log.open("ab") as out:
+    proc = subprocess.Popen(
+        cmd,
+        stdout=out,
+        stderr=subprocess.STDOUT,
+        stdin=subprocess.DEVNULL,
+        start_new_session=True,
+    )
+
+pidfile.write_text(str(proc.pid) + "\n", encoding="utf-8")
+
+print(f"Started PID: {proc.pid}")
+print(f"Log: {log}")
+print(f"PID file: {pidfile}")
+PY
