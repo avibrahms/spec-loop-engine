@@ -189,6 +189,7 @@ def _git_followup_note(workspace: Path, start_snapshot: dict[str, Any] | None) -
 def _find_latest_unfinished_run(spec: SpecConfig) -> Path | None:
     if not spec.run_root.exists():
         return None
+    phase_limits = {phase.id: phase.max_attempts for phase in spec.phases}
     candidates = sorted([path for path in spec.run_root.iterdir() if path.is_dir()], reverse=True)
     for candidate in candidates:
         state_path = candidate / "state.json"
@@ -201,6 +202,12 @@ def _find_latest_unfinished_run(spec: SpecConfig) -> Path | None:
             if isinstance(phase_state, dict)
         ):
             return candidate
+        if state.get("status") == "failed":
+            for phase_id, phase_state in state.get("phases", {}).items():
+                if not isinstance(phase_state, dict) or phase_state.get("status") != "failed":
+                    continue
+                if len(phase_state.get("attempts", [])) < phase_limits.get(phase_id, 0):
+                    return candidate
         if state.get("status") not in {"completed", "failed", "blocked"}:
             return candidate
     return None
